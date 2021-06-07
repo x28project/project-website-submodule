@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="theme-color" content="#272727"/>
+    <link rel="manifest" href="<%= htmlWebpackPlugin.options.publicPath %>app.webmanifest" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <%= htmlWebpackPlugin.tags.headTags %>
+  </head>
+  <body>
+    <div>
+      <header class="mui-appbar mui--appbar-height mui--z2">
+        <div>
+          <h1>
+            <a href="/">
+              <img src="<%= htmlWebpackPlugin.options.logo.src %>" alt="<%= htmlWebpackPlugin.options.logo.alt %>" />
+            </a>
+          </h1>
+          <div class="mui--text-caption">
+            <%= htmlWebpackPlugin.options.tagline %>
+          </div>
+        </div>
+        <% if (htmlWebpackPlugin.options.links.youtube) { %>
+          <a
+            class="mui-btn"
+            href="<%= htmlWebpackPlugin.options.links.youtube.href %>"
+            rel="noopener"
+            title="<%= htmlWebpackPlugin.options.links.youtube.title %>"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"
+              />
+            </svg>
+          </a>
+        <% } %>
+      </header>
+      <div>
+        <% htmlWebpackPlugin.options.projects.forEach((project) => { %>
+          <div
+            class="mui-panel<%= project.hidden ? ' mui--hide' : '' %>"
+            id="'<%= project.id %>"
+          >
+            <div id="<%= project.abbr %>"<%= project.game ? ' class=\"vg-cover\"' : '' %>>
+              <% if (project.cover) { %>
+                <a href="<%= project.cover.src %>" target="_blank">
+                  <picture>
+                    <source srcset="<%= encodeURI(project.cover.webp) %>" type="image/webp">
+                    <source srcset="<%= encodeURI(project.cover.src) %>" type="image/png"> 
+                    <img
+                      src="<%= project.cover.src %>"
+                      loading="lazy"
+                      alt="<%= project.cover.alt %>"
+                    />
+                  </picture>
+                </a>
+              <% } %>
+              <% if (project.game) { %>
+                <div>
+                  <a href="<%= project.game.href %>" target="_blank" title="Play <%= project.title %>">
+                    <div class="big_play_button">
+                      <div class="big_play_icon"></div>
+                    </div>
+                  </a>
+                </div>
+              <% } %>
+              <% if (project.video) { %>
+                <div class="yt"></div>
+              <% } %>
+            </div>
+            <div <%= project.video ? ' class=\"nbb\"' : '' %>>
+              <h2><%= project.title %></h2>
+              <div><%= project.year %></div>
+            </div>
+            <div <%= project.game ? ' class=\"vg-links\"' : '' %>>
+              <% project.tracks && project.tracks.forEach((track, index) => { %>
+                <div>
+                  <div><%= index + 1 %></div>
+                  <a href="<%= track.href %>" target="_blank"><%= track.title %></a>
+                </div>
+              <% }); %>
+              <% project.links && project.links.forEach((link, index) => { %>
+                <div>
+                  <div></div>
+                  <a href="<%= link.href %>" target="_blank">
+                    <% if (link.type === 'play') { %>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M10,16.5L16,12L10,7.5V16.5Z"
+                        />
+                      </svg>
+                    <% } else if (link.type === 'download') { %>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+                      </svg>
+                    <% } %>
+                    <%= link.text %>
+                  </a>
+                </div>
+              <% }); %>
+              <% if (project.video) { %>
+                <div class="np"></div>
+              <% } %>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <footer>
+        <ul>
+          <% if (htmlWebpackPlugin.options.links.soundcloud) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.soundcloud.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.soundcloud.title %>"
+                target="_blank"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M11.56,8.87V17H20.32V17C22.17,16.87 23,15.73 23,14.33C23,12.85 21.88,11.66 20.38,11.66C20,11.66 19.68,11.74 19.35,11.88C19.11,9.54 17.12,7.71 14.67,7.71C13.5,7.71 12.39,8.15 11.56,8.87M10.68,9.89C10.38,9.71 10.06,9.57 9.71,9.5V17H11.1V9.34C10.95,9.5 10.81,9.7 10.68,9.89M8.33,9.35V17H9.25V9.38C9.06,9.35 8.87,9.34 8.67,9.34C8.55,9.34 8.44,9.34 8.33,9.35M6.5,10V17H7.41V9.54C7.08,9.65 6.77,9.81 6.5,10M4.83,12.5C4.77,12.5 4.71,12.44 4.64,12.41V17H5.56V10.86C5.19,11.34 4.94,11.91 4.83,12.5M2.79,12.22V16.91C3,16.97 3.24,17 3.5,17H3.72V12.14C3.64,12.13 3.56,12.12 3.5,12.12C3.24,12.12 3,12.16 2.79,12.22M1,14.56C1,15.31 1.34,15.97 1.87,16.42V12.71C1.34,13.15 1,13.82 1,14.56Z"
+                  />
+                </svg>
+              </a>
+            </li>
+          <% } %>
+          <% if (htmlWebpackPlugin.options.links.twitter) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.twitter.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.twitter.title %>"
+                target="_blank"
+              >
+                <svg class="w-24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"
+                  />
+                </svg>
+              </a>
+            </li>
+          <% } %>
+          <% if (htmlWebpackPlugin.options.links.facebook) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.facebook.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.facebook.title %>"
+                target="_blank"
+              >
+                <svg class="w-24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z"
+                  />
+                </svg>
+              </a>
+            </li>
+          <% } %>
+          <% if (htmlWebpackPlugin.options.links.tumblr) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.tumblr.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.tumblr.title %>"
+                target="_blank"
+              >
+                <svg class="w-24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M17,11H13V15.5C13,16.44 13.28,17 14.5,17H17V21C17,21 15.54,21.05 14.17,21.05C10.8,21.05 9.5,19 9.5,16.75V11H7V7C10.07,6.74 10.27,4.5 10.5,3H13V7H17"
+                  />
+                </svg>
+              </a>
+            </li>
+          <% } %>
+          <% if (htmlWebpackPlugin.options.links.linkedin) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.linkedin.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.linkedin.title %>"
+                target="_blank"
+              >
+                <svg class="w-24" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M21,21H17V14.25C17,13.19 15.81,12.31 14.75,12.31C13.69,12.31 13,13.19 13,14.25V21H9V9H13V11C13.66,9.93 15.36,9.24 16.5,9.24C19,9.24 21,11.28 21,13.75V21M7,21H3V9H7V21M5,3A2,2 0 0,1 7,5A2,2 0 0,1 5,7A2,2 0 0,1 3,5A2,2 0 0,1 5,3Z"
+                  />
+                </svg>
+              </a>
+            </li>
+          <% } %>
+          <% if (htmlWebpackPlugin.options.links.archive) { %>
+            <li>
+              <a
+                class="mui-btn"
+                href="<%= htmlWebpackPlugin.options.links.archive.href %>"
+                rel="noopener"
+                title="<%= htmlWebpackPlugin.options.links.archive.title %>"
+                target="_blank"
+              >
+                <svg class="w-18" viewBox="0 0 13.1 15">
+                  <g>
+                    <polygon points="0.1,1.5 0.3,1.9 12.6,1.9 12.9,1.5 6.5,0  " />
+                    <rect x="0.4" y="2.5" width="12.2" height="1.1" />
+                  </g>
+                  <path
+                    d="M1,4.2H2l0.2,0.1c0,0,0.2,2.8,0.2,3.7c0,0.9-0.1,4.5-0.1,4.5L2,12.5h-1l-0.3-0.1  c0,0-0.2-2.9-0.2-4.4s0.2-3.7,0.2-3.7L1,4.2z"
+                  />
+                  <path
+                    d="M11,4.2h1.1l0.2,0.1c0,0,0.2,2.8,0.2,3.7c0,0.9-0.1,4.5-0.1,4.5l-0.3,0.1h-1l-0.3-0.1  c0,0-0.2-2.9-0.2-4.4s0.2-3.7,0.2-3.7L11,4.2z"
+                  />
+                  <path
+                    d="M4.3,4.2h1l0.2,0.1c0,0,0.2,2.8,0.2,3.7c0,0.9-0.1,4.5-0.1,4.5l-0.3,0.1H4.4l-0.3-0.1  c0,0-0.2-2.9-0.2-4.4s0.2-3.7,0.2-3.7L4.3,4.2z"
+                  />
+                  <path
+                    d="M7.7,4.2h1L9,4.2c0,0,0.2,2.8,0.2,3.7c0,0.9-0.1,4.5-0.1,4.5l-0.3,0.1H7.8l-0.3-0.1  c0,0-0.2-2.9-0.2-4.4s0.2-3.7,0.2-3.7L7.7,4.2z"
+                  />
+                  <g>
+                    <rect x="0.4" y="13.1" width="12.3" height="0.6" />
+                    <rect y="14.3" width="13.1" height="0.7" />
+                  </g>
+                </svg>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+        <% if (htmlWebpackPlugin.options.copyright) { %>}
+          <p>&copy;<%= new Date().getFullYear() %> <%= htmlWebpackPlugin.options.copyright %> | All Rights Reserved</p>
+        <% } %>
+        <button id="show_hidden_panel" class="mui-btn" aria-label="Show hidden panel"></button>
+      </footer>
+    </div>
+    <template id="more-dropdown--template">
+      <div class="mui-dropdown">
+        <button class="mui-btn" data-mui-toggle="dropdown" title="More">
+          <svg class="w-24" viewBox="0 0 24 24">
+            <path
+              d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
+            />
+          </svg>
+        </button>
+        <ul class="mui-dropdown__menu mui-dropdown__menu--right">
+          <li>
+            <a class="more-cover" href="" target="_blank">
+              <img src="" loading="lazy" alt="Album cover" />
+            </a>
+            <div class="mui-divider"></div>
+          </li>
+          <li>
+            <a class="more-link" href="" target="_blank">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+              </svg>
+              Download Zip
+            </a>
+          </li>
+        </ul>
+      </div>
+    </template>
+    <% htmlWebpackPlugin.files.js.forEach(js => { %>
+      <script type="text/javascript" src="<%= js %>"></script>
+    <% }) %>
+  </body>
+</html>

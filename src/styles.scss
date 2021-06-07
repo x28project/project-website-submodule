@@ -1,0 +1,334 @@
+* {
+  scroll-margin-top: 84px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  background: #000;
+}
+
+// Header
+.mui-appbar {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #272727;
+  color: #fff;
+  z-index: 1;
+  // branding
+  > div {
+    flex: 1;
+    h1 {
+      margin: 0;
+      // logo
+      a {
+        display: inline-block;
+        img {
+          margin-top: -4px;
+          height: 56px;
+        }
+      }
+    }
+    // caption under logo
+    .mui--text-caption {
+      margin: -18px 0 0 9px;
+      @media (max-width: 479px) {
+        margin-top: -20px;
+      }
+    }
+  }
+  // extra left padding for larger devices
+  @media (min-width: 480px) {
+    padding-left: 16px;
+  }
+  // button
+  .mui-btn {
+    margin-right: 8px;
+  }
+}
+// Button
+.mui-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  box-shadow: none !important;
+  // background for all states
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: #272727 !important;
+  }
+  // less height for dropdown
+  &[data-mui-toggle='dropdown'] {
+    height: 36px;
+  }
+  // icon
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: #fff;
+    // small icon
+    &.w-24 {
+      width: 24px;
+      height: 24px;
+    }
+    // smaller icon
+    &.w-18 {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Link (non-button)
+a:not(.mui-btn) {
+  transition: opacity 0.15s linear;
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+// Dropdown Menu
+.mui-dropdown__menu {
+  > li {
+    // dropdown links
+    > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      // artwork link
+      > img {
+        height: 128px;
+      }
+      // full download
+      > svg {
+        margin-right: 8px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+// Content Wrapper
+.mui-appbar + div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 68px;
+  padding: 8px 0;
+  // extra top margin (under header) for larger devices
+  @media (min-width: 480px) {
+    margin-top: 76px;
+  }
+}
+
+// Panel
+.mui-panel {
+  margin: 0 auto 32px;
+  padding: 0 8px;
+  background: transparent;
+  // artwork
+  > *:first-child {
+    display: flex;
+    position: relative;
+    // link, image, and iframe
+    > a,
+    img,
+    iframe,
+    .yt {
+      display: block;
+      border: 0;
+      width: 500px;
+      max-width: calc(100vw - 16px);
+      height: 500px;
+      max-height: calc(100vw - 16px);
+      box-shadow: 0 0 1px 0px #272727;
+    }
+    // iframe overlays links and images
+    iframe {
+      position: absolute;
+      height: 100%;
+    }
+    // video game artwork
+    &.vg-cover {
+      position: relative;
+      // auto heights for link and image
+      > a,
+      > a img {
+        height: auto;
+        max-height: none;
+      }
+      // overlay for play link
+      > div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        // play link
+        > a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          // play button
+          .big_play_button {
+            visibility: visible;
+            width: 50px;
+            height: 50px;
+            background: #000;
+            background: rgba(0, 0, 0, 0.75);
+            position: absolute;
+            left: 2.86%;
+            bottom: 2.86%;
+            cursor: pointer;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: '2px';
+            border-radius: 2px;
+            // play icon
+            .big_play_icon {
+              border-color: transparent transparent transparent #fff;
+              border-style: dashed dashed dashed solid;
+              border-width: 10px 0px 10px 18px;
+              margin: 15px auto;
+              top: 0;
+              left: 1px;
+              position: relative;
+              width: 0px;
+              height: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+  // title and year
+  > *:nth-child(2) {
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0 8px;
+    width: 500px;
+    max-width: calc(100vw - 16px);
+    background: transparent;
+    color: #fff;
+    // no bottom border when there's no tracks/links
+    &.nbb {
+      border-bottom: none;
+    }
+    // title
+    > h2 {
+      margin: 0;
+      padding: 8px 8px 8px 0 !important;
+      font-size: 20px;
+    }
+    // year
+    > div {
+      flex: 1;
+      margin: 8px 0 0 0;
+      text-align: right;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+  // tracks/links
+  > *:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    padding: 4px 0;
+    // no padding when there's no tracks/links
+    &.np {
+      padding: 0;
+    }
+    // rows
+    > * {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      background: transparent;
+      color: #fff;
+      // track number
+      > *:first-child {
+        padding: 0 8px;
+        width: 32px;
+        max-width: 32px;
+        color: #7f7e7e;
+        text-align: right;
+      }
+      // track title or link text
+      > *:nth-child(2) {
+        flex: 1;
+        margin: auto 0;
+        padding: 8px 0 8px 8px;
+        vertical-align: middle;
+        color: #fff;
+      }
+    }
+    // video game links
+    &.vg-links {
+      // rows
+      > * {
+        // no track number for links
+        > :first-child {
+          padding: 0;
+          width: 0;
+        }
+        // link
+        > a:nth-child(2) {
+          display: flex;
+          align-items: center;
+          // link icon
+          svg {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Footer
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  // list of links
+  ul {
+    display: flex;
+    padding: 0;
+    li {
+      margin: 0 2px;
+    }
+  }
+  // copyright
+  p {
+    margin: 0 16px 16px;
+    color: #fff;
+  }
+}
+
+// Show Hidden Panel Button?
+#show_hidden_panel {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+}
