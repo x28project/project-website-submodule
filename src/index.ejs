@@ -56,7 +56,7 @@
         <% htmlWebpackPlugin.options.projects.forEach((project) => { %>
           <div
             class="mui-panel<%= project.hidden ? ' mui--hide' : '' %>"
-            id="'<%= project.id %>"
+            id="<%= project.id %>"
           >
             <div id="<%= project.abbr %>"<%= project.game ? ' class=\"vg-cover\"' : '' %>>
               <% if (project.cover) { %>

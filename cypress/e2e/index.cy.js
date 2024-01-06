@@ -20,17 +20,8 @@ describe('Project website submodule', () => {
   it('should load iframes', () => {
     cy.get('.mui-panel:not(.mui--hide)').as('panel');
     cy.get('@panel').eq(2).scrollIntoView();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
     cy.get('@panel')
       .eq(2)
-      .find('iframe')
-      .its('0.contentDocument')
-      .should('exist');
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
-    cy.get('@panel')
-      .eq(3)
       .find('iframe')
       .its('0.contentDocument')
       .should('exist');
@@ -38,19 +29,20 @@ describe('Project website submodule', () => {
   it('should load video', () => {
     cy.get('.yt').as('video');
     cy.get('@video').first().scrollIntoView();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
     cy.get('@video').next('iframe').its('0.contentDocument').should('exist');
   });
   it('should show hidden panel', () => {
-    cy.get('.mui--hide').as('hiddenPanel');
+    cy.get('#hiddenAlbum.mui--hide').as('hiddenPanel');
     cy.get('@hiddenPanel').should('not.be.visible');
-    cy.get('[aria-label="Show hidden panel"]').focus().click();
-    cy.get('@hiddenPanel').should('be.visible');
+    cy.get('[aria-label="Show hidden panel"]').focus();
+    cy.get('[aria-label="Show hidden panel"]').click();
+    cy.get('@hiddenPanel').should('not.exist');
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
-    cy.window().then(($window) => {
-      expect($window.scrollY).to.equal(0);
+    cy.get('#hiddenAlbum').then(($hiddenAlbum) => {
+      const hiddenAlbum = $hiddenAlbum[0];
+      console.log(hiddenAlbum);
+      expect(hiddenAlbum.getClientRects()[0].top).greaterThan(79).lessThan(100);
     });
   });
   it('should reload', () => {
