@@ -27,6 +27,19 @@ if (!htmlConfigFound || !projectsConfigFound || !imagesDirFound) {
   process.exit();
 }
 
+const publicPath =
+  process.argv?.[
+    process.argv?.findIndex((s) => s.startsWith('publicPath='))
+  ]?.split('=')?.[1];
+// eslint-disable-next-line no-console
+console.log('publicPath:', publicPath);
+if (!publicPath) {
+  // eslint-disable-next-line no-console
+  console.warn(
+    'Missing publicPath argument. Defaulting to http://localhost:8080/\n'
+  );
+}
+
 global.projects = require('../webpack.config.projects');
 const htmlWebpackPluginOptions = require('../webpack.config.html');
 const definesWebpackPluginDefinitions = require('./webpack.config.defines');
@@ -64,7 +77,7 @@ module.exports = {
       ...definesWebpackPluginDefinitions,
     }),
     new HtmlWebpackPlugin({
-      publicPath: 'http://localhost:8080/',
+      publicPath: publicPath || 'http://localhost:8080/',
       inject: false,
       ...htmlWebpackPluginOptions,
     }),
